@@ -41,7 +41,7 @@ const PRODUCTS = [
   },
   {
     id: 3,
-    name: "Coffee - Large",
+    name: "Amar gold coffee",
     pricingType: "base",
     baseWeight: 50,
     basePrice: 80,
