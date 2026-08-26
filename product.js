@@ -29,7 +29,7 @@ const PRODUCTS = [
     pricingType: "base",
     baseWeight: 400, // grams
     basePrice: 90, // rupees
-    image: "bikaneri-bhujia.png",
+    image: "amar bhujiya.jfif",
   },
   {
     id: 2,
@@ -45,42 +45,42 @@ const PRODUCTS = [
     pricingType: "base",
     baseWeight: 50,
     basePrice: 80,
-    image: "images/coffee-large.jpg",
+    image: "amar gold coffee.jfif",
   },
   {
     id: 4,
     name: "Paras Dana Chai",
     pricingType: "perGram",
     pricePerGram: 0.28,
-    image: "images/paras-dana-chai.jpg",
+    image: "paras dana.jfif",
   },
   {
     id: 5,
     name: "Paras Medium Chai",
     pricingType: "perGram",
     pricePerGram: 0.28,
-    image: "images/paras-medium-chai.jpg",
+    image: "paras meduim.jfif",
   },
   {
     id: 6,
     name: "Amar Gold Chai",
     pricingType: "perGram",
     pricePerGram: 0.32,
-    image: "images/amar-gold-chai.jpg",
+    image: "amar gold.jfif",
   },
   {
     id: 7,
     name: "Chai Masala",
     pricingType: "perGram",
     pricePerGram: 1,
-    image: "images/chai-masala.jpg",
+    image: "amar chai masala.jfif",
   },
   {
     id: 8,
     name: "Green Tea",
     pricingType: "perGram",
     pricePerGram: 1.6,
-    image: "images/green-tea.jpg",
+    image: "amar green tea.jfif",
   },
 ];
 
