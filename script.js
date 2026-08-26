@@ -37,13 +37,20 @@
   // 1. CONFIG + DOM REFERENCES + STATE
   // =========================================================================
 
-  const CONFIG = {
-    FRAME_PROCESS_INTERVAL_MS: 350, // throttle: don't run recognition on every rAF tick
-    GOOD_MATCH_DISTANCE: 50, // ORB/Hamming distance below which a match counts as "good" (0-256 scale)
-    MIN_GOOD_MATCHES: 12, // minimum good matches required to accept a recognition
-    CONFIDENCE_DISPLAY_SCALE: 40, // good-match count that maps to ~100% on the confidence readout
-    ORB_FEATURES: 500,
-  };
+ const CONFIG = {
+  FRAME_PROCESS_INTERVAL_MS: 350,
+
+  // Make feature matching stricter.
+  GOOD_MATCH_DISTANCE: 40,
+
+  // Require more actual feature matches.
+  MIN_GOOD_MATCHES: 30,
+
+  // Used only for displaying approximate confidence.
+  CONFIDENCE_DISPLAY_SCALE: 40,
+
+  ORB_FEATURES: 1000,
+};
 
   const RecognitionState = {
     IDLE: "idle", // camera off
@@ -270,11 +277,30 @@
     frameDescriptors.delete();
     orb.delete();
 
-    if (!best || best.goodMatches < CONFIG.MIN_GOOD_MATCHES) return null;
+   // Reject weak matches completely.
+// The scanner must be allowed to return NO PRODUCT.
+if (!best) return null;
 
-    const confidencePercent = Math.min(100, Math.round((best.goodMatches / CONFIG.CONFIDENCE_DISPLAY_SCALE) * 100));
-    return { product: best.product, confidencePercent };
-  }
+const confidencePercent = Math.min(
+  100,
+  Math.round(
+    (best.goodMatches / CONFIG.CONFIDENCE_DISPLAY_SCALE) * 100
+  )
+);
+
+// Strict validation.
+// Do NOT guess a product just because it has the highest score.
+if (
+  best.goodMatches < CONFIG.MIN_GOOD_MATCHES ||
+  confidencePercent < 75
+) {
+  return null;
+}
+
+return {
+  product: best.product,
+  confidencePercent
+};
 
   // =========================================================================
   // 3. CAMERA CONTROL + RECOGNITION LOOP
