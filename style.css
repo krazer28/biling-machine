@@ -36,6 +36,16 @@
 
 * { box-sizing: border-box; }
 
+/* A page-wide safety net: any element with the `hidden` attribute stays
+   hidden no matter what display value a more specific component rule
+   sets later in this file (grid/flex layout rules on cards, modals,
+   images, etc. would otherwise win over the browser's default
+   [hidden] { display: none } and make "hidden" elements render anyway). */
+[hidden] {
+  display: none !important;
+}
+
+
 html, body {
   margin: 0;
   padding: 0;
@@ -208,7 +218,9 @@ button { font-family: inherit; }
   height: 100%;
   object-fit: cover;
   display: block;
-  transform: scaleX(-1); /* mirror for front-facing/desktop use; irrelevant for rear camera framing */
+  /* Not mirrored: this app defaults to the rear (environment) camera for
+     product scanning, so the preview should match real-world movement —
+     mirroring here would make left/right feel inverted while scanning. */
 }
 
 #overlay {
@@ -631,16 +643,11 @@ button { font-family: inherit; }
   position: fixed;
   inset: 0;
   background: rgba(10, 9, 7, 0.72);
-  display: none; /* default hidden; the [hidden] attribute alone isn't reliable
-                     once an author rule also sets display on the same element */
+  display: flex;
   align-items: center;
   justify-content: center;
   z-index: 50;
   padding: 20px;
-}
-
-.modal:not([hidden]) {
-  display: flex;
 }
 
 .modal-card {
